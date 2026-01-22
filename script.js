@@ -186,8 +186,8 @@ function updateVoltage(voltage) {
   const percentage = Math.min((voltage / 100) * 100, 100);
   voltageFillEl.style.width = percentage + "%";
 
-  // Track statistics
-  if (voltage > 0) {
+  // Track statistics - only update total voltage if it crosses 35mV
+  if (voltage > 35) {
     voltageReadings.push(voltage);
     totalVoltage += voltage;
     totalVoltageEl.textContent = totalVoltage + " mV";
