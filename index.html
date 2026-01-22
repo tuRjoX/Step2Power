@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Step2Power</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+      <div class="loading-content">
+        <div class="energy-circle">
+          <div class="pulse-ring"></div>
+          <div class="pulse-ring pulse-ring-2"></div>
+          <div class="pulse-ring pulse-ring-3"></div>
+          <div class="energy-icon">⚡</div>
+        </div>
+        <h2 class="loading-title">Step2Power</h2>
+        <p class="loading-subtitle">Initializing Energy Monitor...</p>
+        <div class="loading-bar">
+          <div class="loading-bar-fill" id="loadingBarFill"></div>
+        </div>
+        <p class="loading-text" id="loadingText">Loading interface...</p>
+        <div class="loading-developers">
+          <p class="dev-title">Developed by</p>
+          <div class="dev-names">
+            <span>Sirajum Munir </span>
+            <span>Turjo Das Dip </span>
+            <span>Ashfaqur Rahman Chowdhury </span>
+            <span>Nusrat Faraezi Ivy </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <header>
+        <h1>🔋 Step2Power</h1>
+        <p class="subtitle">
+          A Footstep Energy Generator and Harvesting System
+        </p>
+      </header>
+
+      <div class="status-bar">
+        <div class="status-indicator">
+          <span class="status-dot" id="statusDot"></span>
+          <span id="statusText">Disconnected</span>
+        </div>
+      </div>
+
+      <div class="dashboard">
+        <!-- Steps Counter Card -->
+        <div class="card steps-card">
+          <div class="card-icon">👣</div>
+          <h2>Step Count</h2>
+          <div class="value-display">
+            <span class="value" id="stepCount">0</span>
+          </div>
+          <p class="label">Total Steps Detected</p>
+        </div>
+
+        <!-- Voltage Card -->
+        <div class="card voltage-card">
+          <div class="card-icon">⚡</div>
+          <h2>Voltage Output</h2>
+          <div class="value-display">
+            <span class="value" id="voltageValue">0</span>
+            <span class="unit">mV</span>
+          </div>
+          <div class="voltage-bar">
+            <div class="voltage-fill" id="voltageFill"></div>
+          </div>
+          <p class="label">Peak Voltage Reading</p>
+        </div>
+      </div>
+
+      <!-- Activity Log -->
+      <div class="activity-section">
+        <h3>Recent Activity</h3>
+        <div class="activity-log" id="activityLog">
+          <p class="no-activity">Waiting for data...</p>
+        </div>
+      </div>
+
+      <!-- Control Panel -->
+      <div class="control-panel">
+        <button id="connectBtn" class="btn btn-primary">
+          Connect to Arduino
+        </button>
+        <button id="clearBtn" class="btn btn-secondary">Clear Log</button>
+      </div>
+
+      <!-- Statistics -->
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-label">Total Voltage</div>
+          <div class="stat-value" id="totalVoltage">0 mV</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Avg Voltage</div>
+          <div class="stat-value" id="avgVoltage">0 mV</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Session Time</div>
+          <div class="stat-value" id="sessionTime">00:00</div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="developer-list">
+          <p>Sirajum Munir (22-48549-3)</p>
+          <p>Turjo Das Dip (22-48558-3)</p>
+          <p>Ashfaqur Rahman Chowdhury (22-48532-3)</p>
+          <p>Nusrat Faraezi Ivy (22-48608-3)</p>
+        </div>
+      </footer>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
