@@ -6,12 +6,6 @@ const int ledPin = 13;
 
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
-// -------------------- SMART TILE STEP DETECTION --------------------
-// Instead of waiting for voltage to go to 0, we use HYSTERESIS:
-// - Count step when peak goes ABOVE stepHigh_mV
-// - Re-arm when peak goes BELOW stepLow_mV
-// This works for continuous walking (real-world vibration).
-
 const int stepHigh_mV = 30; // step detected above this
 const int stepLow_mV = 15;  // re-arm below this (must be lower than stepHigh_mV)
 
@@ -107,13 +101,11 @@ void loop()
     // -------------------- Step Detection (Hysteresis + Debounce) --------------------
     unsigned long now = millis();
 
-    // Re-arm when signal drops low enough (NOT necessarily 0)
     if (!armed && peak_mV <= stepLow_mV)
     {
         armed = true;
     }
 
-    // Count step when armed + high threshold crossed + debounce passed
     if (armed &&
         peak_mV >= stepHigh_mV &&
         (now - lastStepTime) > debounceTime)
@@ -121,7 +113,7 @@ void loop()
 
         stepCount++;
         lastStepTime = now;
-        armed = false; // lock until it drops below stepLow_mV
+        armed = false; 
 
         // Update LCD steps
         lcd.setCursor(7, 0);
@@ -136,7 +128,6 @@ void loop()
     }
 
     // -------------------- Send to Serial (for Website/Monitor) --------------------
-    // CSV format for web: steps,voltage
     Serial.print(stepCount);
     Serial.print(",");
     Serial.println(peak_mV);

@@ -43,6 +43,9 @@ let voltageReadings = [];
 let totalVoltage = 0;
 let sessionStartTime = null;
 let sessionTimer = null;
+let lastVoltage = 0;
+let peakVoltage = 0;
+let isPeakCounted = false;
 
 // DOM Elements
 const statusDot = document.getElementById("statusDot");
@@ -186,17 +189,41 @@ function updateVoltage(voltage) {
   const percentage = Math.min((voltage / 100) * 100, 100);
   voltageFillEl.style.width = percentage + "%";
 
-  // Track statistics - only update total voltage if it crosses 35mV
-  if (voltage > 35) {
-    voltageReadings.push(voltage);
-    totalVoltage += voltage;
+  // Peak detection logic
+  // Track the maximum voltage as it rises
+  if (voltage > peakVoltage) {
+    peakVoltage = voltage;
+  }
+
+  // When voltage drops back to 0 after reaching a peak above 35mV
+  if (voltage === 0 && lastVoltage > 0 && peakVoltage > 35 && !isPeakCounted) {
+    // Add the peak voltage to total
+    voltageReadings.push(peakVoltage);
+    totalVoltage += peakVoltage;
     totalVoltageEl.textContent = totalVoltage + " mV";
 
     // Calculate average
     const avg =
       voltageReadings.reduce((a, b) => a + b, 0) / voltageReadings.length;
     avgVoltageEl.textContent = Math.round(avg) + " mV";
+
+    // Mark this peak as counted
+    isPeakCounted = true;
+
+    addActivityLog(
+      `Peak detected! Added ${peakVoltage} mV to total`,
+      "success",
+    );
   }
+
+  // Reset peak tracking when voltage starts rising again from 0
+  if (voltage > 0 && lastVoltage === 0) {
+    peakVoltage = voltage;
+    isPeakCounted = false;
+  }
+
+  // Store current voltage for next comparison
+  lastVoltage = voltage;
 
   // Visual feedback for high voltage
   if (voltage > 50) {
